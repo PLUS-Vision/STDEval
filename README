@@ -35,7 +35,7 @@ files which can be used with the GNUPLOT program to render the graph.
 The -c option writes intermediate information to so that subsequent
 executions can avoid searching the RTTM file for term occurences.
 
-perl -I src ./src/STDEval.pl -e test_suite/test2.ecf.xml -r test_suite/test2.rttm -s test_suite/test2.stdlist.xml -t test_suite/test2.tlist.xml -A -o example.occ.txt -a example.ali.txt -d example.det -c example.cache
+perl -I src ./src/STDEval.pl -e test_suite/test2.ecf.xml -r test_suite/test2.rttm -s test_suite/test2.stdlist.xml -t test_suite/test2.tlist.xml -A -o example.occ.txt -a example.ali.txt -d example.det -c example.cache && mv example.* ./tmp/
 
 COPYRIGHT 
 ---------

@@ -718,12 +718,12 @@ sub write_gnuplot_DET_header{
     print $FP "## GNUPLOT command file\n";
     print $FP "set terminal postscript color\n";
     print $FP "set style data lines\n";
-    print $FP "set noxzeroaxis\n";
-    print $FP "set noyzeroaxis\n";
+    print $FP "unset xzeroaxis\n";
+    print $FP "unset yzeroaxis\n";
     print $FP "set key at 1,1\n";
 #    print $FP "set size $aratio_x, $aratio_y\n";
-    print $FP "set noxtics\n"; 
-    print $FP "set noytics\n";
+    print $FP "unset xtics\n"; 
+    print $FP "unset ytics\n";
     print $FP "set title '$title'\n";
     print $FP "set ylabel 'Miss probability (in %)'\n";
     print $FP "set xlabel 'False Alarm probability (in %)'\n";
@@ -735,7 +735,7 @@ sub write_gnuplot_DET_header{
     &write_tics($FP, 'xtics', $x_min, $x_max);
 
     print $FP "plot [${p_x_min}:${p_x_max}] [${p_y_min}:${p_y_max}] \\\n";
-    print $FP "   -x title 'Random Performance' with lines 1";
+    print $FP "   -x title 'Random Performance' with lines";
 
 }
 
@@ -796,8 +796,8 @@ sub writeMultiDetGraph{
 					     $dets->[$d]->getMaxValueValue(),
 					     $dets->[$d]->getMaxValuePMiss(),
 					     $dets->[$d]->getMaxValuePFA());
-	    printf MAINPLT ",\\\n  '$troot.dat.1' using 3:2 title '$typeStr $dets->[$d]->{LINETITLE} Max Value %.3f=(Dec. Score=%.3f)' with lines $colors[$d]", $val, $scr;
-	    printf MAINPLT ",\\\n  '$troot.dat.2' using 6:5 notitle with points $colors[$d]";
+	    printf MAINPLT ",\\\n  '$troot.dat.1' using 3:2 title '$typeStr $dets->[$d]->{LINETITLE} Max Value %.3f=(Dec. Score=%.3f)' with lines", $val, $scr;
+	    printf MAINPLT ",\\\n  '$troot.dat.2' using 6:5 notitle with points";
 	}
     }
     print MAINPLT "\n";
@@ -881,13 +881,13 @@ sub writeGNUGraph{
 				     $self->getMaxValuePFA());
     print DAT "$scr $val $Pmiss $Pfa ".ppndf($Pmiss)." ".ppndf($Pfa)."\n";
     close DAT; 
-    printf PLT "    '$fileRoot.dat.1' using 3:2 title '$self->{LINETITLE} Max Value %.3f=(Pfa=%.6f, Pmiss=%.4f, Dec. Score=%.3f)' with lines 2, \\\n",  $val, $Pfa, $Pmiss, $scr;
-    printf PLT "    '$fileRoot.dat.2' using 6:5 notitle with points 2";
+    printf PLT "    '$fileRoot.dat.1' using 3:2 title '$self->{LINETITLE} Max Value %.3f=(Pfa=%.6f, Pmiss=%.4f, Dec. Score=%.3f)' with lines, \\\n",  $val, $Pfa, $Pmiss, $scr;
+    printf PLT "    '$fileRoot.dat.2' using 6:5 notitle with points";
     
     if ($self->{STYLE} ne "pooled"){
 	print PLT ", \\\n";
-        printf PLT "    '$fileRoot.dat.1' using 8:7 title '+/- 2 Standard Error' with lines 3, \\\n";
-	printf PLT "    '$fileRoot.dat.1' using 10:9 notitle with lines 3";
+        printf PLT "    '$fileRoot.dat.1' using 8:7 title '+/- 2 Standard Error' with lines, \\\n";
+	printf PLT "    '$fileRoot.dat.1' using 10:9 notitle with lines";
     }
     print PLT "\n";
     close PLT;
